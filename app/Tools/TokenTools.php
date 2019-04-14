@@ -17,7 +17,7 @@ use App\Token;
 class TokenTools
 {
     private static function prefix() {
-        return 'token_';
+        return env('REDIS_PREFIX', 'CourseSystem_') . 'token_';
     }
 
     /**
