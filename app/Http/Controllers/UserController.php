@@ -15,9 +15,11 @@ class UserController extends Controller
     private $tokenExpireTime = 259200;
 
     private $userTable;
+    private $roleTable;
 
-    public function __construct(User $userTable) {
+    public function __construct(User $userTable, Role $roleTable) {
         $this->userTable = $userTable;
+        $this->roleTable = $roleTable;
     }
 
     public function register(Request $request) {
@@ -26,7 +28,8 @@ class UserController extends Controller
             'mobile'    => 'required',
             'email'     => 'required',
             'job'       => 'required',
-            'password'  => 'required'
+            'password'  => 'required',
+            'role'      => 'required'
         ]);
 
         if($this->userTable->where('mobile', $request->mobile)->first() != null) {
@@ -35,6 +38,16 @@ class UserController extends Controller
                 'message'   => '该手机号已注册'
             ]);
         }
+
+        $role = $this->roleTable->where('role', $request->role)->first();
+        if($role == null) {
+            return response([
+                'code'      => 1004,
+                'message'   => '无角色名对应的角色'
+            ]);
+        }
+
+        $roleId = $role->id;
 
         $this->userTable->insert([
             'name'      => $request->name,
@@ -48,7 +61,7 @@ class UserController extends Controller
         $userRoleTable = new UserRole();
         $userRoleTable->insert([
             'users_id'  => $user->id,
-            'roles_id'  => 2
+            'roles_id'  => $roleId
         ]);
 
         return response([
@@ -81,9 +94,8 @@ class UserController extends Controller
         $token = TokenTools::createAndSet($user->id, $expiredAt);
 
         $userRoleTable = new UserRole();
-        $roleTable = new Role();
         $userRole = $userRoleTable->where('users_id', $user->id)->first();
-        $role = $roleTable->where('id', $userRole->roles_id)->first()->name;
+        $role = $this->roleTable->where('id', $userRole->roles_id)->first()->name;
 
         return response([
             'code'  => 0,
