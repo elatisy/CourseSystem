@@ -39,7 +39,7 @@ class UserController extends Controller
             ]);
         }
 
-        $role = $this->roleTable->where('role', $request->role)->first();
+        $role = $this->roleTable->where('name', $request->role)->first();
         if($role == null) {
             return response([
                 'code'      => 1004,
