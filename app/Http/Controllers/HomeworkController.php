@@ -73,7 +73,7 @@ class HomeworkController extends Controller
     public function updateHomework(Request $request) {
         $this->validate($request, [
             'class_name'    => 'required',
-            'data'          => 'data'
+            'data'          => 'required'
         ]);
 
         if(RoleTools::getOnesRolesIdByUsersId($request->users_id) != 1) {
