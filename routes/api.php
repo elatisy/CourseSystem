@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 include 'Routes/User.php';
 include 'Routes/URL.php';
+include 'Routes/Homework.php';
 
 
 Route::get('/', function () {

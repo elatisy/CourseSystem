@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 
 use App\PPTUrl;
 use App\UserRole;
-use App\Role;
 use App\ClassModel;
-use App\Tools\RedisTools;
 use App\Tools\ClassTools;
 
 
@@ -76,6 +74,72 @@ class PPTController extends Controller
         return response([
             'code'  => 0,
             'data'  => $data
+        ]);
+    }
+
+    public function getClasses(Request $request) {
+        $classes = $this->classTable->where('users_id', $request->users_id)->get();
+
+        $data = [];
+        foreach ($classes as $class) {
+            $data []= $class->name;
+        }
+
+        return response([
+            'code'  => 0,
+            'data'  => $data
+        ]);
+    }
+
+    public function getPPTsByClassName(string $name) {
+        $class = $this->classTable->where('name', $name)->first();
+        if($class == null) {
+            return response([
+                'code'  => 0,
+                'data'  => []
+            ]);
+        }
+
+        $PPTs = $this->PPTUrlTable->where('classes_id', $class->id)->get();
+        $data = [];
+        foreach ($PPTs as $PPT) {
+            $data []= [
+                'id'            => $PPT->id,
+                'name'          => $PPT->name,
+                'class_name'    => $name,
+                'url'           => $PPT->url
+            ];
+        }
+
+        return response([
+            'code'  => 0,
+            'data'  => $data
+        ]);
+    }
+
+    public function deletePPT(Request $request) {
+        $this->validate($request, [
+            'PPT_id'    => 'required'
+        ]);
+
+        $PPT = $this->PPTUrlTable->where('id', $request->PPT_id)->first();
+        if($PPT == null) {
+            return response([
+                'code'  => 0
+            ]);
+        }
+
+        if($PPT->users_id != $request->users_id) {
+            return response([
+                'code'      => 2002,
+                'message'   => '只能删除对应账号上传的PPT'
+            ]);
+        }
+
+        $this->PPTUrlTable->where('id', $request->PPT_id)->delete();
+
+        return response([
+            'code'  => 0
         ]);
     }
 }

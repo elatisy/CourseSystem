@@ -13,5 +13,8 @@ Route::group([
     'middleware'    => 'token'
 ],function (){
     Route::get('getall', 'PPTController@getAllPPTs');
+    Route::get('getclasses', 'PPTController@getClasses');
+    Route::get('getbyclassname/{name}', 'PPTController@getPPTsByClassName');
+    Route::post('delete', 'PPTController@deletePPT');
     Route::post('upload', 'PPTController@uploadPPT');
 });
