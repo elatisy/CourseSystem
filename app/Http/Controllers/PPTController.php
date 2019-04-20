@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\PPTUrl;
+use App\UserRole;
+use App\Role;
 
 class PPTController extends Controller
 {
@@ -20,6 +22,16 @@ class PPTController extends Controller
             'PPTUrl'        => 'required',
             'class_name'    => 'required'
         ]);
+
+        $userRoleTable = new UserRole();
+        $rolesId = $userRoleTable->where('users_id', $request->users_id)->first()->roles_id;
+
+        if($rolesId != 1) {
+            return response([
+                'code'      => 2001,
+                'message'   => '只有教师才能上传PPT'
+            ]);
+        }
 
         $this->PPTUrlTable->insert([
             'name'          => $request->name,
