@@ -34,11 +34,20 @@ class HomeworkController extends Controller
         }
 
         $classes_id = ClassTools::setClass($request->class_name, $request->users_id);
-        $this->homeworkTable->insert([
-            'classes_id'    => $classes_id,
-            'users_id'      => $request->users_id,
-            'data'          => $request->data
-        ]);
+
+        $check = $this->homeworkTable->where('classes_id', $classes_id)->first();
+        if($check != null) {
+            $this->homeworkTable->where('classes_id', $classes_id)->update([
+                'users_id'  => $request->users_id,
+                'data'      => json_encode($request->data)
+            ]);
+        } else {
+            $this->homeworkTable->insert([
+                'classes_id'    => $classes_id,
+                'users_id'      => $request->users_id,
+                'data'          => json_encode($request->data)
+            ]);
+        }
 
         return response([
             'code'  => 0
