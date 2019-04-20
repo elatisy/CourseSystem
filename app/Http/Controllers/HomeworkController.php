@@ -66,7 +66,7 @@ class HomeworkController extends Controller
         $homework = $this->homeworkTable->where('classes_id', $class->id)->first();
         return response([
             'code'  => 0,
-            'data'  => $homework->data
+            'data'  => json_decode($homework->data)
         ]);
     }
 
