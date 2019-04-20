@@ -31,6 +31,6 @@ class CreateHomeworkTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homeworks');
+        Schema::dropIfExists('homework');
     }
 }

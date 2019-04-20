@@ -13,7 +13,7 @@ class CreateHomeworkDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('homework_datas', function (Blueprint $table) {
+        Schema::create('homework_data', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('homework_id');
             $table->bigInteger('users_id');
@@ -29,6 +29,6 @@ class CreateHomeworkDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homework_datas');
+        Schema::dropIfExists('homework_data');
     }
 }
