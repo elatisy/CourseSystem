@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 
+use App\Tools\TokenTools;
+
 class TokenMiddleware
 {
     /**
@@ -15,7 +17,14 @@ class TokenMiddleware
      */
     public function handle($request, Closure $next)
     {
-//        TODO:通过token获取users_id
+        $request->users_id = TokenTools::getTokenUserId($request->header('token'));
+        if($request->users_id == null) {
+            return response([
+                'code'      => 1005,
+                'message'   => '用户未登录'
+            ]);
+        }
+
         return $next($request);
     }
 }

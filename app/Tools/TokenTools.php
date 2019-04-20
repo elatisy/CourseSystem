@@ -31,6 +31,10 @@ class TokenTools
     }
 
     public static function getTokenUserId(string $token) {
+        if($token == null) {
+            return null;
+        }
+
         if(env('TOKEN_USE_REDIS')) {
             return self::getTokenUserIdFromCache($token);
         }
@@ -71,6 +75,8 @@ class TokenTools
         $tokenTable = new Token();
         $tokenRow = $tokenTable->where('token', $token)->first();
         if($tokenRow == null) {
+            return null;
+        } else if($tokenRow->expired_at < Carbon::now()->timestamp) {
             return null;
         }
         return $tokenRow->users_id;

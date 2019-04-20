@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('job');
             $table->string('password');
+            $table->string('student_code');
             $table->timestamps();
         });
     }

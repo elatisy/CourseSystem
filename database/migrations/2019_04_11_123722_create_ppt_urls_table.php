@@ -15,8 +15,10 @@ class CreatePptUrlsTable extends Migration
     {
         Schema::create('ppt_urls', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->bigInteger('users_id');
             $table->string('url');
+            $table->string('class_name');
             $table->timestamps();
         });
     }

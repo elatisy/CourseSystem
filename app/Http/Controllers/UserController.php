@@ -24,12 +24,13 @@ class UserController extends Controller
 
     public function register(Request $request) {
         $this->validate($request, [
-            'name'      => 'required',
-            'mobile'    => 'required',
-            'email'     => 'required',
-            'job'       => 'required',
-            'password'  => 'required',
-            'role'      => 'required'
+            'name'          => 'required',
+            'mobile'        => 'required',
+            'email'         => 'required',
+            'job'           => 'required',
+            'password'      => 'required',
+            'role'          => 'required',
+            'student_code'  => 'required'
         ]);
 
         if($this->userTable->where('mobile', $request->mobile)->first() != null) {
@@ -50,11 +51,13 @@ class UserController extends Controller
         $roleId = $role->id;
 
         $this->userTable->insert([
-            'name'      => $request->name,
-            'mobile'    => $request->mobile,
-            'email'     => $request->email,
-            'job'       => $request->job,
-            'password'  => Encrypt::encrypt($request->password)
+            'name'          => $request->name,
+            'mobile'        => $request->mobile,
+            'email'         => $request->email,
+            'job'           => $request->job,
+            'password'      => Encrypt::encrypt($request->password),
+            'student_code'  => $request->student_code
+
         ]);
 
         $user = $this->userTable->where('mobile', $request->mobile)->first();
