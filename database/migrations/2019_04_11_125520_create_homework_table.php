@@ -13,12 +13,13 @@ class CreateHomeworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('homeworks', function (Blueprint $table) {
+        Schema::create('homework', function (Blueprint $table) {
             $table->increments('id');
             $table->bigInteger('users_id');
             $table->string('title');
             $table->json('questions');
             $table->tinyInteger('status');
+            $table->bigInteger('classes_id');
             $table->timestamps();
         });
     }

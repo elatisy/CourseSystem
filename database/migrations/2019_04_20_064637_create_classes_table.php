@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePptUrlsTable extends Migration
+class CreateClassesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreatePptUrlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ppt_urls', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->bigInteger('users_id');
-            $table->string('url');
-            $table->bigInteger('classes_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreatePptUrlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ppt_urls');
+        Schema::dropIfExists('classes');
     }
 }

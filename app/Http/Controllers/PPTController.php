@@ -7,13 +7,19 @@ use Illuminate\Http\Request;
 use App\PPTUrl;
 use App\UserRole;
 use App\Role;
+use App\ClassModel;
+use App\Tools\RedisTools;
+use App\Tools\ClassTools;
+
 
 class PPTController extends Controller
 {
     private $PPTUrlTable;
+    private $classTable;
 
-    public function __construct(PPTUrl $PPTUrlTable) {
+    public function __construct(PPTUrl $PPTUrlTable, ClassModel $classTable) {
         $this->PPTUrlTable = $PPTUrlTable;
+        $this->classTable = $classTable;
     }
 
     public function uploadPPT(Request $request) {
@@ -33,10 +39,12 @@ class PPTController extends Controller
             ]);
         }
 
+        $classes_id = ClassTools::setClass($request->class_name, $request->users_id);
+
         $this->PPTUrlTable->insert([
             'name'          => $request->name,
             'url'           => $request->PPTUrl,
-            'class_name'    => $request->class_name,
+            'classes_id'    => $classes_id,
             'users_id'      => $request->users_id
         ]);
 
@@ -47,13 +55,20 @@ class PPTController extends Controller
 
     public function getAllPPTs(Request $request) {
         $PPTs = $this->PPTUrlTable->where('users_id', $request->users_id)->get();
+        $classes = $this->classTable->where('users_id', $request->users_id)->get();
+
+        $temp = [];
+        foreach ($classes as $class) {
+            $temp[$class->id] = $class->name;
+        }
+        $classes = $temp;
 
         $data =[];
         foreach ($PPTs as $PPT) {
             $data []= [
                 'id'            => $PPT->id,
                 'name'          => $PPT->name,
-                'class_name'    => $PPT->class_name,
+                'class_name'    => $classes[$PPT->classes_id],
                 'url'           => $PPT->url
             ];
         }
