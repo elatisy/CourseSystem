@@ -30,7 +30,7 @@ class TokenTools
         return $token;
     }
 
-    public static function getTokenUserId(string $token) {
+    public static function getTokenUserId($token) {
         if($token == null) {
             return null;
         }
