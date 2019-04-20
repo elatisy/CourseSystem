@@ -85,7 +85,7 @@ class HomeworkController extends Controller
 
         $classes_id = ClassTools::setClass($request->class_name, $request->users_id);
         $this->homeworkTable->where('classes_id', $classes_id)->update([
-            'data'          => $request->data
+            'data'          => json_encode($request->data)
         ]);
 
         return response([
