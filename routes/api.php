@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 include 'Routes/User.php';
+include 'Routes/URL.php';
+
 
 Route::get('/', function () {
     return 'QAQ';
