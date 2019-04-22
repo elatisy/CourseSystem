@@ -41,7 +41,7 @@ class ClassTools
         $classTable = new ClassModel();
         $classes = $classTable->orderBy('id', 'desc')->get();
         foreach ($classes as $class) {
-            $data []= [
+            $data[$class->id] = [
                 'id'            => $class->id,
                 'name'          => $class->name,
                 'users_name'    => $users[$class->users_id]
