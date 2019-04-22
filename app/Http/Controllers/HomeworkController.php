@@ -123,7 +123,7 @@ class HomeworkController extends Controller
                     ['classes_id', $request->classes_id]
                 ])
                 ->update([
-                    'data'  => $request->data
+                    'data'  => json_encode($request->data)
                 ]);
         } else {
             $this->homeworkDataTable->insert([
