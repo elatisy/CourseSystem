@@ -31,7 +31,7 @@ Route::group([
             'middleware'    => 'token'
         ], function() {
             Route::get('getrecordbyusersid', 'HomeworkController@getAllSelfHomeworkRecords');
-            Route::get('getbyclassesidandusersid', 'HomeworkController@getAllSelfHomeworkRecords');
+            Route::post('getbyclassesidandusersid', 'HomeworkController@getHomeworkDataByClassesIdAndUsersId');
             Route::post('handin', 'HomeworkController@handInHomework');
         });
     });
