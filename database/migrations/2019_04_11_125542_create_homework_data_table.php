@@ -15,7 +15,7 @@ class CreateHomeworkDataTable extends Migration
     {
         Schema::create('homework_data', function (Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('classesg_id');
+            $table->bigInteger('classes_id');
             $table->bigInteger('users_id');
             $table->json('data');
             $table->timestamps();
