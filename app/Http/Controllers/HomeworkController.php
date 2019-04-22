@@ -160,7 +160,7 @@ class HomeworkController extends Controller
             ];
         }
 
-        RedisTools::setKeyWillExpired($redisKey, jeon_encode($data), $this->getAllSelfHomeworkExpiredTime);
+        RedisTools::setKeyWillExpired($redisKey, json_encode($data), $this->getAllSelfHomeworkExpiredTime);
 
         return response([
             'code'  => 0,
