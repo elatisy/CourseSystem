@@ -39,7 +39,7 @@ class ClassTools
         }
 
         $classTable = new ClassModel();
-        $classes = $classTable->get();
+        $classes = $classTable->orderBy('id', 'desc')->get();
         foreach ($classes as $class) {
             $data []= [
                 'id'            => $class->id,

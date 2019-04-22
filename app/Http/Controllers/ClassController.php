@@ -43,7 +43,7 @@ class ClassController extends Controller
     }
 
     public function getByUsersId(Request $request) {
-        $classes = $this->classTable->where('users_id', $request->users_id)->get();
+        $classes = $this->classTable->where('users_id', $request->users_id)->orderBy('id', 'desc')->get();
 
         $data = [];
         foreach ($classes as $class) {

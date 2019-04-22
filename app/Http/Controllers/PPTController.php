@@ -52,7 +52,7 @@ class PPTController extends Controller
     }
 
     public function getAllPPTs(Request $request) {
-        $PPTs = $this->PPTUrlTable->where('users_id', $request->users_id)->get();
+        $PPTs = $this->PPTUrlTable->where('users_id', $request->users_id)->orderBy('id', 'desc')->get();
         $classes = $this->classTable->where('users_id', $request->users_id)->get();
 
         $temp = [];
@@ -86,7 +86,7 @@ class PPTController extends Controller
             ]);
         }
 
-        $PPTs = $this->PPTUrlTable->where('classes_id', $class->id)->get();
+        $PPTs = $this->PPTUrlTable->where('classes_id', $class->id)->orderBy('id', 'desc')->get();
         $data = [];
         foreach ($PPTs as $PPT) {
             $data []= [

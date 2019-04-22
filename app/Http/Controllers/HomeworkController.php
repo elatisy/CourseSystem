@@ -152,7 +152,7 @@ class HomeworkController extends Controller
         $classes = ClassTools::getAllClasses();
 
         $data = [];
-        $homeworkDatas = $this->homeworkDataTable->where('users_id', $request->users_id)->orderBy('desc')->get();
+        $homeworkDatas = $this->homeworkDataTable->where('users_id', $request->users_id)->orderBy('id', 'desc')->get();
         foreach ($homeworkDatas as $homeworkData) {
             $data []= [
                 'classes_id'    => $homeworkData->classes_id,
@@ -220,7 +220,7 @@ class HomeworkController extends Controller
         }
 
         $data = [];
-        $homeworkDatas = $this->homeworkDataTable->where('classes_id', $id)->get();
+        $homeworkDatas = $this->homeworkDataTable->where('classes_id', $id)->orderBy('id', 'desc')->get();
         foreach ($homeworkDatas as $homeworkData) {
             $data []= [
                 'users_id'      => $homeworkData->users_id,
