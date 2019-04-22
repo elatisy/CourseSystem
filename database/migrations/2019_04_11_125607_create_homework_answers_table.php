@@ -14,7 +14,7 @@ class CreateHomeworkAnswersTable extends Migration
     public function up()
     {
         Schema::create('homework_answers', function (Blueprint $table) {
-            $table->bigInteger('homework_id');
+            $table->bigInteger('classes_id');
             $table->json('answers');
             $table->timestamps();
         });
