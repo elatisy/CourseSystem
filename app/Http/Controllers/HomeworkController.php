@@ -54,8 +54,8 @@ class HomeworkController extends Controller
         ]);
     }
 
-    public function getHomeworkByClassName(string $name) {
-        $class = $this->classesTable->where('name', $name)->first();
+    public function getHomeworkByClassId(int $id) {
+        $class = $this->classesTable->where('id', $id)->first();
         if($class == null) {
             return response([
                 'code'  => 0,

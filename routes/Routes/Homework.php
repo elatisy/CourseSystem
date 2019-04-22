@@ -13,7 +13,7 @@ Route::group([
     'prefix'        => 'homework'
 ], function (){
 
-    Route::get('getbyclassname/{name}', 'HomeworkController@getHomeworkByClassName');
+    Route::get('getbyclassid/{id}', 'HomeworkController@getHomeworkByClassId');
 
     Route::group([
         'middleware'    => 'token'

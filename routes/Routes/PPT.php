@@ -11,13 +11,12 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix'    => 'ppt'
 ], function() {
-    Route::get('getbyclassname/{name}', 'PPTController@getPPTsByClassName');
+    Route::get('getbyclassid/{id}', 'PPTController@getPPTsByClassId');
 
     Route::group([
         'middleware'    => 'token'
     ],function (){
         Route::get('getall', 'PPTController@getAllPPTs');
-        Route::get('getclasses', 'PPTController@getClasses');
         Route::post('delete', 'PPTController@deletePPT');
         Route::post('upload', 'PPTController@uploadPPT');
     });

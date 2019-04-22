@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 include 'Routes/User.php';
 include 'Routes/PPT.php';
 include 'Routes/Homework.php';
+include 'Routes/Class.php';
 
 
 Route::get('/', function () {

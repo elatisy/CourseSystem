@@ -77,22 +77,8 @@ class PPTController extends Controller
         ]);
     }
 
-    public function getClasses(Request $request) {
-        $classes = $this->classTable->where('users_id', $request->users_id)->get();
-
-        $data = [];
-        foreach ($classes as $class) {
-            $data []= $class->name;
-        }
-
-        return response([
-            'code'  => 0,
-            'data'  => $data
-        ]);
-    }
-
-    public function getPPTsByClassName(string $name) {
-        $class = $this->classTable->where('name', $name)->first();
+    public function getPPTsByClassId(int $id) {
+        $class = $this->classTable->where('id', $id)->first();
         if($class == null) {
             return response([
                 'code'  => 0,
@@ -106,7 +92,7 @@ class PPTController extends Controller
             $data []= [
                 'id'            => $PPT->id,
                 'name'          => $PPT->name,
-                'class_name'    => $name,
+                'class_name'    => $class->name,
                 'url'           => $PPT->url
             ];
         }
