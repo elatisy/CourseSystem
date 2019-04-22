@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tools\ClassTools;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -31,20 +32,7 @@ class ClassController extends Controller
             ]);
         }
 
-        $data = [];
-        $temp = $this->userTable->get();
-        $users = [];
-        foreach ($temp as $user) {
-            $users[$user->id] = $user->name;
-        }
-        $classes = $this->classTable->get();
-        foreach ($classes as $class) {
-            $data []= [
-                'id'            => $class->id,
-                'name'          => $class->name,
-                'users_name'    => $users[$class->users_id]
-            ];
-        }
+        $data = ClassTools::getAllClasses();
 
         RedisTools::setKeyWillExpired($classesRedisKey, json_encode($data), $this->expire_time);
 

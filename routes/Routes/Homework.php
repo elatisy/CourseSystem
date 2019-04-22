@@ -21,4 +21,18 @@ Route::group([
        Route::post('create', 'HomeworkController@createHomework');
        Route::post('update', 'HomeworkController@updateHomework');
     });
+
+    Route::group([
+        'prefix'    => 'data'
+    ], function() {
+        Route::get('getrecordbyclassesid', 'HomeworkController@getHomeworkRecordsByClassesId');
+
+        Route::group([
+            'middleware'    => 'token'
+        ], function() {
+            Route::get('getrecordbyusersid', 'HomeworkController@getAllSelfHomeworkRecords');
+            Route::get('getbyclassesidandusersid', 'HomeworkController@getAllSelfHomeworkRecords');
+            Route::post('handin', 'HomeworkController@handInHomework');
+        });
+    });
 });

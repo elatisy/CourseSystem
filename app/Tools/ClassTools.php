@@ -9,6 +9,7 @@
 namespace App\Tools;
 
 use App\ClassModel;
+use App\User;
 
 
 class ClassTools
@@ -26,5 +27,27 @@ class ClassTools
         ]);
 
         return self::setClass($className, $users_id);
+    }
+
+    public static function getAllClasses() {
+        $data = [];
+        $userTable = new User();
+        $temp = $userTable->get();
+        $users = [];
+        foreach ($temp as $user) {
+            $users[$user->id] = $user->name;
+        }
+
+        $classTable = new ClassModel();
+        $classes = $classTable->get();
+        foreach ($classes as $class) {
+            $data []= [
+                'id'            => $class->id,
+                'name'          => $class->name,
+                'users_name'    => $users[$class->users_id]
+            ];
+        }
+
+        return $data;
     }
 }
