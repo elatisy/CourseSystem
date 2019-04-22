@@ -59,7 +59,10 @@ class ClassController extends Controller
 
         $data = [];
         foreach ($classes as $class) {
-            $data []= $class->name;
+            $data []= [
+                'id'    => $class->id,
+                'name'  => $class->name,
+            ];
         }
 
         return response([
