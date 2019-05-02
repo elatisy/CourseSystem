@@ -174,7 +174,9 @@ class HomeworkController extends Controller
             'classes_id'        => 'required'
         ]);
 
-        if(RoleTools::getOnesRolesIdByUsersId($request->users_id) != 1) {
+        if(RoleTools::getOnesRolesIdByUsersId($request->users_id) != 1 &&
+            $request->homework_users_id != $request->users_id) {
+
             return response([
                 'code'      => 3001,
                 'message'   => '你不能查看此作业'
