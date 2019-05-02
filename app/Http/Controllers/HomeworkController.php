@@ -195,9 +195,11 @@ class HomeworkController extends Controller
             ]);
         }
 
+        $userTable = new User();
         return response([
-            'code'  => 0,
-            'data'  => json_decode($homeworkData->data)
+            'code'          => 0,
+            'data'          => json_decode($homeworkData->data),
+            'student_code'  => $userTable->where('id', $request->homework_users_id)->first()->student_code
         ]);
     }
 
@@ -216,7 +218,7 @@ class HomeworkController extends Controller
         $temp = $userTable->get();
         $users = [];
         foreach ($temp as $user) {
-            $users[$user->id] = $user->name;
+            $users[$user->id] = [$user->name, $user->student_code];
         }
 
         $data = [];
@@ -224,7 +226,8 @@ class HomeworkController extends Controller
         foreach ($homeworkDatas as $homeworkData) {
             $data []= [
                 'users_id'      => $homeworkData->users_id,
-                'users_name'    => $users[$homeworkData->users_id],
+                'users_name'    => $users[$homeworkData->users_id][0],
+                'student_code'  => $users[$homeworkData->users_id][1]
             ];
         }
 
